@@ -1,0 +1,45 @@
+.set hello, 0
+
+.data
+buffer:
+        .byte 64
+
+input_msg:
+        .string "Enter a number: \n"
+
+hello_world:
+        .string "Hello, World!\n"
+
+.global _start
+.intel_syntax noprefix
+
+
+.text
+_start:
+        // sys_write
+        mov rax, 1
+        mov rdi, 1
+        lea rsi, [input_msg]
+        mov rdx, 17
+        syscall
+
+        // sys_read
+        mov rax, 0
+        mov rdi, 1
+        mov rsi, [buffer]
+        mov rdx, 64
+        syscall
+
+        //write user input
+        mov rax, 1
+        mov rdi, 1
+        mov rsi, [buffer]
+        mov rdx, rax
+        syscall
+
+
+        // sys exit
+        mov rax, 60
+        mov rdi, 69
+        syscall
+
