@@ -35,6 +35,13 @@ m3:
 
 _start:
 
+        // sys_write m1
+        mov rax, 1
+        mov rdi, 1
+        lea rsi, [m1]
+        mov rdx, 62
+        syscall
+
         // Read input from the user
         mov rax, sys_read
         mov rdi, stdin
