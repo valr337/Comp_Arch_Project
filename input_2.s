@@ -6,27 +6,14 @@
 .set stdout, 1
 
 .set success, 0
-.set buffer_len, 64
+.set buffer_len, 32
 
 .data
 b1:
         .byte buffer_len
 
-b2:
-        .byte buffer_len
-
-b3:
-        .byte buffer_len
-
-m1:
-        .string "Key in a positive decimal as the number of row address bits: \n"
-        //62
-m2:
-        .string "Key in a positive decimal as the number of column address bits: \n"
-        //65
-m3:
-        .string "Key in a positive decimal as the number of data bits in DRAM: \n"
-        //62
+output_msg:
+        .string "You entered: "
 
 .text
 
@@ -35,28 +22,54 @@ m3:
 
 _start:
 
-        // sys_write m1
-        mov rax, 1
-        mov rdi, 1
-        lea rsi, [m1]
-        mov rdx, 62
-        syscall
-
         // Read input from the user
         mov rax, sys_read
         mov rdi, stdin
-        lea rsi, [b1]
+        lea eax, [b1]
         mov rdx, buffer_len
         syscall
 
-        // Write whatever the user entered back out
-        mov rdx, rax
+        // sys_write
         mov rax, sys_write
         mov rdi, stdout
-        lea rsi, [b1]
+        lea rsi, [output_msg]
+        mov rdx, 13
+        syscall
+
+        // Write whatever the user entered back out
+        mov rax, sys_write
+        mov rdi, stdout
+        lea rsi, eax
+        mov rdx, rax
+        syscall
+
+        //2^input_1 * 2^input_2 * input_3 / 8(bits --> bytes)
+        //exponent loop
+        mov ebx, eax //b1 == 11 input is exponent
+        call pw
+        mov eax, edx
+
+        // Output of func
+        mov rax, sys_write
+        mov rdi, stdout
+        lea rsi, eax
+        mov rdx, 14
         syscall
 
         // End the program
         mov rax, sys_exit
         mov rdi, success
         syscall
+
+pw:
+        //jl(jump if less than)
+        //jg(jump if more than)
+        mov ecx, 0 //i
+        mov edx, 1 //result
+        cmp ecx, ebx
+        jl ret // exit loop if i < result
+
+        mul edx, edx, 2 //multiply result by 2 until loop ends exponent is 2*2*2*2*...*2
+
+
+
