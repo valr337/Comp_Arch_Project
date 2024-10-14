@@ -1,18 +1,21 @@
+# aarch64 asm
+
 .global _start
-.intel_syntax noprefix
+.section .text
 
 _start:
-        // sys_write
-        mov rax, 1
-        mov rdi, 1
-        lea rsi, [hello_world]
-        mov rdx, 14
-        syscall
+    #write system call
+    mov x8, #64
+    mov x0, #1
+    ldr x1, =message
+    mov x2, #13
+    svc 0
 
-        // sys exit
-        mov rax, 60
-        mov rdi, 69
-        syscall
+    #exit system call
+    mov x8, #0x5d
+    mov x0, #0x41
+    svc 0
 
-hello_world:
-        .asciz "Hello, World!\n"
+.section .data
+    message:
+    .ascii "Hello, World\n"

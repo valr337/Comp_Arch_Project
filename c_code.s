@@ -13,22 +13,22 @@ pw:
 .LFB24:
 	.cfi_startproc
 	mov	w3, w0	// base, tmp97
-// c_code.c:16:     int result = 1;
+// c_code.c:18:     int result = 1;
 	mov	w0, 1	// <retval>,
-// c_code.c:18:     for (i = 0; i < exp; i++)
+// c_code.c:20:     for (i = 0; i < exp; i++)
 	mov	w2, 0	// i,
-// c_code.c:18:     for (i = 0; i < exp; i++)
+// c_code.c:20:     for (i = 0; i < exp; i++)
 	b	.L2		//
 .L3:
-// c_code.c:19:         result *= base;
+// c_code.c:21:         result *= base;
 	mul	w0, w0, w3	// <retval>, <retval>, base
-// c_code.c:18:     for (i = 0; i < exp; i++)
+// c_code.c:20:     for (i = 0; i < exp; i++)
 	add	w2, w2, 1	// i, i,
 .L2:
-// c_code.c:18:     for (i = 0; i < exp; i++)
+// c_code.c:20:     for (i = 0; i < exp; i++)
 	cmp	w2, w1	// i, exp
 	blt	.L3		//,
-// c_code.c:22: }
+// c_code.c:24: }
 	ret	
 	.cfi_endproc
 .LFE24:
@@ -39,7 +39,7 @@ pw:
 	.string	"%d"
 	.align	3
 .LC1:
-	.string	"Output: %d"
+	.string	"Number: %i"
 	.text
 	.align	2
 	.global	main
@@ -53,18 +53,18 @@ main:
 	.cfi_offset 29, -16
 	.cfi_offset 30, -8
 	add	x29, sp, 16	//,,
-// c_code.c:3: int main(){
+// c_code.c:5: int main(){
 	adrp	x0, :got:__stack_chk_guard	// tmp95,
 	ldr	x0, [x0, :got_lo12:__stack_chk_guard]	// tmp95,
 	ldr	x1, [x0]	// tmp105,
-	str	x1, [sp, 8]	// tmp105, D.5058
+	str	x1, [sp, 8]	// tmp105, D.5059
 	mov	x1, 0	// tmp105
-// c_code.c:7:     scanf("%d",&x);
+// c_code.c:9:     scanf("%d",&x);
 	add	x1, sp, 4	//,,
 	adrp	x0, .LC0	// tmp98,
 	add	x0, x0, :lo12:.LC0	//, tmp98,
 	bl	__isoc99_scanf		//
-// c_code.c:9:     printf("Output: %d", pw(2,x));
+// c_code.c:11:     printf("Number: %i",pw(2,x));
 	ldr	w1, [sp, 4]	//, x
 	mov	w0, 2	//,
 	bl	pw		//
@@ -74,10 +74,10 @@ main:
 	add	x1, x1, :lo12:.LC1	//, tmp101,
 	mov	w0, 2	//,
 	bl	__printf_chk		//
-// c_code.c:12: }
+// c_code.c:14: }
 	adrp	x0, :got:__stack_chk_guard	// tmp103,
 	ldr	x0, [x0, :got_lo12:__stack_chk_guard]	// tmp103,
-	ldr	x2, [sp, 8]	// tmp106, D.5058
+	ldr	x2, [sp, 8]	// tmp106, D.5059
 	ldr	x1, [x0]	// tmp107,
 	subs	x2, x2, x1	// tmp106, tmp107
 	mov	x1, 0	// tmp107
