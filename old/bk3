@@ -1,0 +1,55 @@
+.set sys_exit, 60
+.set sys_read, 0
+.set sys_write, 1
+
+.set stdin, 0
+.set stdout, 1
+
+.set success, 0
+.set buffer_len, 32
+
+.data
+b1:
+    .byte buffer_len
+    .value 1
+
+sum:
+    .byte 32
+
+temp1:
+    .byte buffer_len
+
+.text
+
+.global _start
+.intel_syntax noprefix
+
+_start:
+
+    mov eax, 1
+    str [sum], eax
+
+    // Output of func
+    mov rax, sys_write
+    mov rdi, stdout
+    lea rsi, [a_msg]
+    mov rdx, 14
+    syscall
+
+    // Output of func
+    mov rax, sys_write
+    mov rdi, stdout
+    mov rsi, [sum]
+    mov rdx, 14
+    syscall
+
+    // End the program
+    mov rax, sys_exit
+    mov rdi, success
+    syscall
+
+
+adr_sum:
+    .byte sum
+a_msg:
+    .asciz "You entered: \n"

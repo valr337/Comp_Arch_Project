@@ -1,0 +1,1 @@
+#include <stdio.h>int pw(int base,int exp);int main(){    int x;    scanf("%d",&x);    printf("Number: %i",pw(2,x));    return 0}int pw(int base, int exp) {    int i = 0;    int result = 1;    for (i = 0; i < exp; i++)        result *= base;    return result;}
