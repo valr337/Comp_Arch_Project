@@ -35,55 +35,12 @@ m3:
 
 _start:
 
-        // sys_write m1
-        mov rax, 1
-        mov rdi, 1
-        lea rsi, [m1]
-        mov rdx, 62
-        syscall
-
         // Read input from the user
         mov rax, sys_read
         mov rdi, stdin
         lea rsi, [b1]
         mov rdx, buffer_len
         syscall
-
-        // sys_write m2
-        mov rax, 1
-        mov rdi, 1
-        lea rsi, [m2]
-        mov rdx, 62
-        syscall
-
-        // Read input from the user
-        mov rax, sys_read
-        mov rdi, stdin
-        lea rsi, [b2]
-        mov rdx, buffer_len
-        syscall
-
-        // sys_write m3
-        mov rax, 1
-        mov rdi, 1
-        lea rsi, [m3]
-        mov rdx, 62
-        syscall
-
-        // Read input from the user
-        mov rax, sys_read
-        mov rdi, stdin
-        lea rsi, [b3]
-        mov rdx, buffer_len
-        syscall
-
-        // Read input from the user
-        mov rax, sys_read
-        mov rdi, stdin
-        lea rsi, [b1]
-        mov rdx, buffer_len
-        syscall
-
 
         // Write whatever the user entered back out
         mov rdx, rax
