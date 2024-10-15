@@ -1,6 +1,7 @@
 # aarch64 asm
 
-    #standard constants
+
+#standard constants
 .set sys_exit, 93
 .set sys_read, 63
 .set sys_write, 64
@@ -9,38 +10,34 @@
 .set stdin, 0
 .set stdout, 1
 
+.data
+    input_msg1:
+        .asciz "Please type a number: "
+    scanf_fmt : .asciz "%d"
+    msg_output: .asciz "Fibonacci number %d is %ld\n"
+
 .global main
 .type	main, %function
 .section .text
 
 main:
 
-// /usr/aarch64-linux-gnu/include/bits/stdio2.h:86:   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
-	ldr	w2, [sp, 4]	//, x
-	adrp	x1, .LC1	// tmp99,
-	add	x1, x1, :lo12:.LC1	//, tmp99,
+	stp	x29, x30, [sp, -16]!	//,,,
+	mov	x29, sp	//,
+    //printf
+	adrp	x1, .message	// tmp94,
+	add	x1, x1, :lo12:.message	//, tmp94,
 	mov	w0, 2	//,
 	bl	__printf_chk		//
+// c_1.c:8: }
+	mov	w0, 0	//,
+	ldp	x29, x30, [sp], 16	//,,,
+	ret
 
-    // c_1.c:7:     scanf("%d",&x);
-	add	x1, sp, 4	//,,
-	adrp	x0, .LC0	// tmp97,
-	add	x0, x0, :lo12:.LC0	//, tmp97,
-	bl	__isoc99_scanf		//
-
-    bl	__printf_chk
-
-    #write system call
-    mov x8, sys_write
-    mov x0, stdout
-    ldr x1, =buffer
-    mov x2, #32
-    svc 0
-
-    #exit system call
-    mov x8, sys_exit
-    mov x0, stdin
-    svc 0
+.message:
+	.string	"Hello\n"
+	.text
+	.align	2
 
 .section .data
     message:
