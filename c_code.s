@@ -59,11 +59,14 @@ main:
 	ldr	x1, [x0]	// tmp105,
 	str	x1, [sp, 8]	// tmp105, D.5059
 	mov	x1, 0	// tmp105
+
+
 // c_code.c:9:     scanf("%d",&x);
 	add	x1, sp, 4	//,,
 	adrp	x0, .LC0	// tmp98,
 	add	x0, x0, :lo12:.LC0	//, tmp98,
 	bl	__isoc99_scanf		//
+
 // c_code.c:11:     printf("Number: %i",pw(2,x));
 	ldr	w1, [sp, 4]	//, x
 	mov	w0, 2	//,
